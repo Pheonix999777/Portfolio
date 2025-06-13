@@ -167,6 +167,8 @@ export const ProjectData = [
   },
   {
     title: "Portfolio Website",
+    link: "https://diamond-diaz.vercel.app/",
+    github: "https://github.com/Pheonix999777/Diamond-Diaz.git",
     description:
       "Custom portfolio website template for creative professionals.",
     image: DiamondDiaz,

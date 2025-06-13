@@ -1,12 +1,15 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sun, Moon } from "lucide-react";
 
 export default function Header() {
+  const { theme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("home");
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Menyu holatini saqlash
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,14 +59,14 @@ export default function Header() {
           Dev<span className="text-amber-500">Portfolio</span>
         </motion.div>
 
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex items-center space-x-6">
           {["home", "about", "projects", "skills", "contact"].map((item) => (
             <motion.button
               key={item}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection(item)}
-              className={`capitalize ${
+              className={`capitalize transition-colors ${
                 activeSection === item
                   ? "text-purple-600 dark:text-purple-400 font-medium"
                   : "text-gray-600 dark:text-gray-300"
@@ -72,13 +75,40 @@ export default function Header() {
               {item}
             </motion.button>
           ))}
-        </nav>
 
-        <div className="md:hidden">
+          {/* Theme Toggle */}
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setIsMenuOpen((prev) => !prev)} // Menyu holatini o'zgartirish
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+            <span className="sr-only">Toggle Theme</span>
+          </Button>
+        </nav>
+
+        {/* Mobile Menu Toggle */}
+        <div className="md:hidden flex gap-2 items-center">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
           >
             <span className="sr-only">Toggle menu</span>
             <svg
@@ -100,6 +130,7 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Mobile Menu Items */}
       {isMenuOpen && (
         <motion.nav
           className="md:hidden flex flex-col items-center space-y-4 bg-white dark:bg-gray-900 p-4"

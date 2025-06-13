@@ -1,8 +1,7 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { GitlabIcon as GitHub, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 export default function Contact() {
   return (
     <section id="contact" className="py-20">
